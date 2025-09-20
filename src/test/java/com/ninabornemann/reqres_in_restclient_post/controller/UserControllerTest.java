@@ -67,30 +67,65 @@ class UserControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/users"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json("""
-                         [
-                            {
-                              "id": "1",
-                              "email": "george.bluth@reqres.in",
-                              "first_name": "George",
-                              "last_name": "Bluth",
-                              "avatar": "https://reqres.in/img/faces/1-image.jpg"
-                            },
-                            {
-                              "id": "2",
-                              "email": "janet.weaver@reqres.in",
-                              "first_name": "Janet",
-                              "last_name": "Weaver",
-                              "avatar": "https://reqres.in/img/faces/2-image.jpg"
-                            },
-                            {
-                              "id": "3",
-                              "email": "emma.wong@reqres.in",
-                              "first_name": "Emma",
-                              "last_name": "Wong",
-                              "avatar": "https://reqres.in/img/faces/3-image.jpg"
-                            }
-                         ]
+                        [
+                           {
+                             "id": "1",
+                             "email": "george.bluth@reqres.in",
+                             "first_name": "George",
+                             "last_name": "Bluth",
+                             "avatar": "https://reqres.in/img/faces/1-image.jpg"
+                           },
+                           {
+                             "id": "2",
+                             "email": "janet.weaver@reqres.in",
+                             "first_name": "Janet",
+                             "last_name": "Weaver",
+                             "avatar": "https://reqres.in/img/faces/2-image.jpg"
+                           },
+                           {
+                             "id": "3",
+                             "email": "emma.wong@reqres.in",
+                             "first_name": "Emma",
+                             "last_name": "Wong",
+                             "avatar": "https://reqres.in/img/faces/3-image.jpg"
+                           }
+                        ]
+                        
+                        """));
+    }
 
-                         """));
+    @Test
+    void createUser_shouldAddAnewUser() throws Exception {
+        mockServer.expect(requestTo("https://reqres.in/api/users"))
+                .andExpect(method(HttpMethod.POST))
+                .andRespond(withSuccess("""
+                        {
+                            "id": "123",
+                            "name": "Rebecca",
+                            "job": "Photographer",
+                            "createdAt": "2025-09-19T10:15:30.000Z"
+                        }
+                        """, MediaType.APPLICATION_JSON));
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/users")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("""
+                        {
+                            "name": "Rebecca",
+                            "job": "Photographer"
+                        }
+                        """))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().json("""
+                        {
+                           "id": "123",
+                           "name": "Rebecca",
+                           "job": "Photographer",
+                           "createdAt": "2025-09-19T10:15:30.000Z"
+                        }
+                        """
+                ))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").isNotEmpty())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.createdAt").isNotEmpty());
     }
 }
