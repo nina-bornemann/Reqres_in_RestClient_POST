@@ -16,8 +16,8 @@ It demonstrates how to build a REST client with **Spring Boot 3** to perform `GE
 ---
 
 ## 🛠️ Tech Stack
-- Java 21
-- Spring Boot 3.x
+- Java 24
+- Spring Boot 3
 - Spring Web (RestClient)
 - Maven
  
