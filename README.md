@@ -1,4 +1,6 @@
-# ReqRes REST Client – Spring Boot Demo
+[![Java CI with Maven](https://github.com/nina-bornemann/Reqres_in_RestClient_POST/actions/workflows/maven.yml/badge.svg)](https://github.com/nina-bornemann/Reqres_in_RestClient_POST/actions/workflows/maven.yml)
+
+# 📡 ReqRes REST Client – Spring Boot Demo
 
 This project is a simple Spring Boot application that connects to the public [ReqRes API](https://reqres.in/).  
 It demonstrates how to build a REST client with **Spring Boot 3** to perform `GET`, `POST`, and `DELETE` requests.
