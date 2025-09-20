@@ -17,6 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.method;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -127,5 +128,15 @@ class UserControllerTest {
                 ))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").isNotEmpty())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.createdAt").isNotEmpty());
+    }
+
+    @Test
+    void deleteUserByID_shouldDeleteUser_WhenGivenId() throws Exception {
+        mockServer.expect(requestTo("https://reqres.in/api/users/123"))
+                .andExpect(method(HttpMethod.DELETE))
+                .andRespond(withSuccess());
+
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/users/123"))
+                .andExpect(MockMvcResultMatchers.status().isOk());
     }
 }
