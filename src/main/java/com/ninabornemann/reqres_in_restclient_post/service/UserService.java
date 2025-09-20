@@ -40,4 +40,10 @@ public class UserService {
                 .retrieve()
                 .body(ResponseNewUser.class);
     }
+
+    public void deleteUsersById(String id) {
+        restClient.delete()
+                .uri("/users/{id}", id)
+                .header("x-api-key", "reqres-free-v1");
+    }
 }

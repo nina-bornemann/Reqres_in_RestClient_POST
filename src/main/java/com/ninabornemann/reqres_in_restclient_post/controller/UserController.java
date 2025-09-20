@@ -27,4 +27,9 @@ public class UserController {
     public ResponseNewUser createUser(@RequestBody RequestNewUser newUser) {
         return service.createUser(newUser);
     }
+
+    @DeleteMapping("/{id}")
+    public void deleteUserById(@PathVariable String id) {
+        service.deleteUsersById(id);
+    }
 }
